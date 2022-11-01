@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
-import useStyles from "./styles";
 import { TextField, Button, Typography, Paper } from "@mui/material";
-
-//redux
-import { useDispatch, useSelector } from "react-redux";
-import { createPost, updatePost } from "../../actions/posts";
+import { useState } from "react";
+import FileBase from "react-file-base64";
+import { useDispatch } from "react-redux";
+import { createPost } from "../../actions/posts";
 
 export default function Form() {
+  const dispatch = useDispatch();
+
+  function handleSubmit() {
+    event.preventDefault();
+    dispatch(createPost(postData));
+  }
+
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -14,58 +19,28 @@ export default function Form() {
     tags: "",
     selectedFile: "",
   });
-  const post = useSelector((state) =>
-    currentId ? state.posts.find((message) => message._id === currentId) : null
-  );
-  const dispatch = useDispatch();
-  const classes = useStyles();
 
-  useEffect(() => {
-    if (post) setPostData(post);
-  }, [post]);
+  function updateData(event) {
+    const { name, value } = event.target;
+    setPostData((prevPostData) => ({
+      ...prevPostData,
+      [name]: value,
+    }));
+  }
 
-  const clear = () => {
-    setCurrentId(0);
-    setPostData({
-      creator: "",
-      title: "",
-      message: "",
-      tags: "",
-      selectedFile: "",
-    });
-  };
+  function clear() {}
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (currentId === 0) {
-      dispatch(createPost(postData));
-      clear();
-    } else {
-      dispatch(updatePost(currentId, postData));
-      clear();
-    }
-  };
   return (
-    <Paper className={classes.paper}>
-      <form
-        autoComplete="off"
-        noValidate
-        className={`${classes.root} ${classes.form}`}
-        onSubmit={handleSubmit}
-      >
-        <Typography variant="h6">
-          {currentId ? `Editing "${post.title}"` : "Creating a Memory"}
-        </Typography>
+    <Paper>
+      <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Typography variant="h6">Create a Memory</Typography>
         <TextField
           name="creator"
           variant="outlined"
           label="Creator"
           fullWidth
           value={postData.creator}
-          onChange={(e) =>
-            setPostData({ ...postData, creator: e.target.value })
-          }
+          onChange={updateData}
         />
         <TextField
           name="title"
@@ -73,31 +48,25 @@ export default function Form() {
           label="Title"
           fullWidth
           value={postData.title}
-          onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+          onChange={updateData}
         />
         <TextField
           name="message"
           variant="outlined"
           label="Message"
           fullWidth
-          multiline
-          rows={4}
           value={postData.message}
-          onChange={(e) =>
-            setPostData({ ...postData, message: e.target.value })
-          }
+          onChange={updateData}
         />
         <TextField
           name="tags"
           variant="outlined"
-          label="Tags (coma separated)"
+          label="Tags"
           fullWidth
           value={postData.tags}
-          onChange={(e) =>
-            setPostData({ ...postData, tags: e.target.value.split(",") })
-          }
+          onChange={updateData}
         />
-        <div className={classes.fileInput}>
+        <div>
           <FileBase
             type="file"
             multiple={false}
@@ -107,8 +76,7 @@ export default function Form() {
           />
         </div>
         <Button
-          className={classes.buttonSubmit}
-          variant="contained"
+          variant="containt"
           color="primary"
           size="large"
           type="submit"
@@ -117,7 +85,7 @@ export default function Form() {
           Submit
         </Button>
         <Button
-          variant="contained"
+          variant="containt"
           color="secondary"
           size="small"
           onClick={clear}

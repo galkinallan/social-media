@@ -6,4 +6,5 @@ const router = express.Router();
 router.get('/', postsController.getPosts)
 router.post('/', postsController.createPost)
 
-export default router
+
+export default router;
