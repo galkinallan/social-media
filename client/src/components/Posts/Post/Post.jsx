@@ -15,7 +15,7 @@ import moment from "moment";
 
 import "./Post.css";
 
-export default function Post({ post }) {
+export default function Post({ post, setCurrentId }) {
   return (
     <Card className="card">
       <CardMedia
@@ -33,7 +33,13 @@ export default function Post({ post }) {
         </Typography>
       </div>
       <div className="overlay2">
-        <Button style={{ color: "white" }} size="small" onClick={() => {}}>
+        <Button
+          style={{ color: "white" }}
+          size="small"
+          onClick={() => {
+            setCurrentId(post._id);
+          }}
+        >
           <MoreHorizIcon fontSize="large" />
         </Button>
       </div>

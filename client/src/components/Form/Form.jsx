@@ -2,14 +2,28 @@ import { TextField, Button, Typography, Paper } from "@mui/material";
 import { useState } from "react";
 import FileBase from "react-file-base64";
 import { useDispatch } from "react-redux";
-import { createPost } from "../../actions/posts";
+import { createPost, updatePost } from "../../actions/posts";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
-export default function Form() {
+export default function Form({ currentId, setCurrentId }) {
   const dispatch = useDispatch();
+
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((p) => p._id === currentId) : null
+  );
+
+  useEffect(() => {
+    if (post) setPostData(post);
+  }, [post]);
 
   function handleSubmit() {
     event.preventDefault();
-    dispatch(createPost(postData));
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(createPost(postData));
+    }
   }
 
   const [postData, setPostData] = useState({
