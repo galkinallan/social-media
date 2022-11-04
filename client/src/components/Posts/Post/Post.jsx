@@ -49,7 +49,7 @@ export default function Post({ post, setCurrentId }) {
         </Button>
       </div>
       <div className="details">
-        <Typography variant="body2" color="textSecondary">
+        <Typography variant="body2" color="textSecondary" conmponent="h2">
           {post.tags.map((tag) => `#${tag}`)}
         </Typography>
       </div>

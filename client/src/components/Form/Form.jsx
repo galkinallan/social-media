@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { createPost, updatePost } from "../../actions/posts";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import "./Form.css";
 
 export default function Form({ currentId, setCurrentId }) {
   const dispatch = useDispatch();
@@ -56,8 +57,13 @@ export default function Form({ currentId, setCurrentId }) {
   }
 
   return (
-    <Paper>
-      <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+    <Paper className="paper">
+      <form
+        className="root"
+        autoComplete="off"
+        noValidate
+        onSubmit={handleSubmit}
+      >
         <Typography variant="h6">
           {currentId ? `Editing` : `Creating`} a Memory
         </Typography>
@@ -70,6 +76,10 @@ export default function Form({ currentId, setCurrentId }) {
           onChange={updateData}
         />
         <TextField
+          sx={{
+            mt: 2,
+          }}
+          className="field"
           name="title"
           variant="outlined"
           label="Title"
@@ -78,6 +88,10 @@ export default function Form({ currentId, setCurrentId }) {
           onChange={updateData}
         />
         <TextField
+          sx={{
+            mt: 2,
+          }}
+          className="field"
           name="message"
           variant="outlined"
           label="Message"
@@ -86,6 +100,10 @@ export default function Form({ currentId, setCurrentId }) {
           onChange={updateData}
         />
         <TextField
+          sx={{
+            mt: 2,
+          }}
+          className="field"
           name="tags"
           variant="outlined"
           label="Tags"
@@ -93,7 +111,7 @@ export default function Form({ currentId, setCurrentId }) {
           value={postData.tags}
           onChange={updateData}
         />
-        <div>
+        <div className="fileInput">
           <FileBase
             type="file"
             multiple={false}
@@ -103,7 +121,8 @@ export default function Form({ currentId, setCurrentId }) {
           />
         </div>
         <Button
-          variant="containt"
+          className="buttonSubmit"
+          variant="contained"
           color="primary"
           size="large"
           type="submit"
@@ -112,7 +131,10 @@ export default function Form({ currentId, setCurrentId }) {
           Submit
         </Button>
         <Button
-          variant="containt"
+          sx={{
+            mt: 1,
+          }}
+          variant="contained"
           color="secondary"
           size="small"
           onClick={clear}
