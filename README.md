@@ -2,7 +2,7 @@
 
 Perfect app to save and share your memories!
 
-**Link to project:**
+**Link to project:** https://galkinallan-memories.netlify.app/
 
 ![alt tag](./project.png)
 
