@@ -21,8 +21,10 @@ export default function Form({ currentId, setCurrentId }) {
     event.preventDefault();
     if (currentId) {
       dispatch(updatePost(currentId, postData));
+      clear();
     } else {
       dispatch(createPost(postData));
+      clear();
     }
   }
 
@@ -42,12 +44,23 @@ export default function Form({ currentId, setCurrentId }) {
     }));
   }
 
-  function clear() {}
+  function clear() {
+    setCurrentId(null);
+    setPostData({
+      creator: "",
+      title: "",
+      message: "",
+      tags: "",
+      selectedFile: "",
+    });
+  }
 
   return (
     <Paper>
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Typography variant="h6">Create a Memory</Typography>
+        <Typography variant="h6">
+          {currentId ? `Editing` : `Creating`} a Memory
+        </Typography>
         <TextField
           name="creator"
           variant="outlined"

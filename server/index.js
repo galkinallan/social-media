@@ -12,6 +12,7 @@ app.use(cors());
 
 app.use("/posts", postRoutes);
 
+const URI = "";
 const PORT = process.env.PORT || 8080;
 
 mongoose
