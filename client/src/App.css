@@ -15,3 +15,13 @@
 .image {
   margin-left: 15px;
 }
+
+.mainContainer {
+  flex-direction: column-reverse;
+}
+
+@media screen and (max-width: 480px) {
+  .mainContainer {
+    flex-direction: column-reverse;
+  }
+}
